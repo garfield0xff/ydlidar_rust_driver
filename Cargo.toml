@@ -2,7 +2,7 @@
 name = "ydlidar-rust-driver"
 description = "ydlidar rust package"
 homepage = "https://github.com/garfield0xff"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Garfield0xff <garfield0xff@gmail.com>"]
 edition = "2021"
 repository = "https://github.com/garfield0xff/ydlidar_rust_driver"
