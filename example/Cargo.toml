@@ -7,9 +7,6 @@ default-run = "ydlidar_example"
 [dependencies]
 ydlidar-rust-driver = { path = ".." }
 serialport = "4.7.2"
-log = "0.4"
-env_logger = "0.10"
-colored = "2.0"
 
 [[bin]]
 name = "ydlidar_example"
@@ -18,16 +15,3 @@ path = "src/main.rs"
 [[bin]]
 name = "debug"
 path = "src/debug_main.rs"
-
-[[bin]]
-name = "raw_debug"
-path = "src/raw_debug.rs"
-
-[[bin]]
-name = "scan_debug"
-path = "src/scan_debug.rs"
-
-
-[[bin]]
-name = "protocol_analyzer"
-path = "src/protocol_analyzer.rs"
