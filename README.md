@@ -83,8 +83,3 @@ loop {
     // Process points...
 }
 ```
-    fn get_info_cmd() -> &'static [u8; 2] {
-        &[0xA5, 0x90]
-    }
-}
-```
