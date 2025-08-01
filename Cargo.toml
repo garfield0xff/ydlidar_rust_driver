@@ -1,0 +1,25 @@
+[package]
+name = "yd-driver"
+description = "embedded yd-driver"
+homepage = "https://github.com/garfield0xff/yd-driver"
+version = "0.1.0"
+authors = ["Garfield0xff <garfield0xff@gmail.com>"]
+edition = "2021"
+repository = "https://github.com/garfield0xff/yd-driver"
+license = "MIT OR Apache-2.0"
+keywords = ["embedded"]
+categories = ["embedded"]
+
+[dependencies]
+anyhow = { version = "1.0.98", optional = true }
+embedded-io = { version = "0.6.1", default-features = false }
+nb = "1.1.0"
+serialport = { version = "4.7.2", optional = true }
+heapless = { version = "0.8", optional = true }
+
+
+[features]
+default = ["std"]
+std = ["dep:anyhow", "dep:serialport", "embedded-io/std"]
+no_std = ["dep:heapless"]
+
