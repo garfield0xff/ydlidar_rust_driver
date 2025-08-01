@@ -283,10 +283,9 @@ where T: LidarCommands + Send + 'static,
         let cmd = T::start_scan_cmd();
         self.send_command_with_retry(cmd)?;
         
-        let response = self.wait_for_response(cmd[1], COMMAND_TIMEOUT)?;
-        if response.len() < 7 {
-            return Err(LidarError::InvalidResponse);
-        }
+        // T-Mini Plus starts sending scan data immediately after START_SCAN command
+        // No need to wait for a specific response
+        thread::sleep(Duration::from_millis(100)); // Give device time to start
         
         *self.is_scanning.lock().unwrap() = true;
         
@@ -433,11 +432,11 @@ where T: LidarCommands + Send + 'static,
             return Err(LidarError::InvalidResponse);
         }
         
-        if response[0] != LIDAR_RESPONSE_HEADER || response[1] != 0x14 {
+        if response[0] != LIDAR_RESPONSE_HEADER || response[2] != 0x14 {
             return Err(LidarError::InvalidResponse);
         }
         
-        let model = response[7];
+        let model = response[6];
         let firmware_major = response[9];
         let firmware_minor = response[8];
         let firmware = ((firmware_major as u16) << 8) | (firmware_minor as u16);
@@ -665,11 +664,11 @@ where
             }
         }
         
-        if response[0] != LIDAR_RESPONSE_HEADER || response[1] != 0x14 {
+        if response[0] != LIDAR_RESPONSE_HEADER || response[2] != 0x14 {
             return Err(LidarError::InvalidResponse);
         }
         
-        let model = response[7];
+        let model = response[6];
         let firmware_major = response[9];
         let firmware_minor = response[8];
         let firmware = ((firmware_major as u16) << 8) | (firmware_minor as u16);
