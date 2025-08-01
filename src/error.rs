@@ -11,6 +11,8 @@ pub enum LidarError {
     Io(std::io::Error),
     /// Command timeout.
     Timeout,
+    /// Not found device.
+    NotFound,
     /// Invalid response from device.
     InvalidResponse,
     /// Command execution failed.
@@ -27,6 +29,7 @@ impl fmt::Display for LidarError {
             #[cfg(feature = "std")]
             LidarError::Io(e) => write!(f, "IO error: {}", e),
             LidarError::Timeout => write!(f, "Command timeout"),
+            LidarError::NotFound => write!(f, "Device not found"),
             LidarError::InvalidResponse => write!(f, "Invalid response from LIDAR"),
             LidarError::CommandFailed => write!(f, "Command execution failed"),
             LidarError::BufferOverflow => write!(f, "Scan buffer overflow"),
@@ -66,6 +69,7 @@ impl embedded_io::Error for LidarError {
             LidarError::SerialPort(_) => embedded_io::ErrorKind::Other,
             #[cfg(feature = "std")]
             LidarError::Io(_) => embedded_io::ErrorKind::Other,
+            LidarError::NotFound => embedded_io::ErrorKind::NotFound,
             LidarError::Timeout => embedded_io::ErrorKind::TimedOut,
             LidarError::InvalidResponse => embedded_io::ErrorKind::InvalidData,
             LidarError::CommandFailed => embedded_io::ErrorKind::Other,

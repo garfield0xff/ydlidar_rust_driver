@@ -1,5 +1,5 @@
 //! # YDLidar Driver
-//! 
+//!
 //! rust implementation of the YDLidar
 //! ## Quick Start
 //!

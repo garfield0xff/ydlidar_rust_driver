@@ -1,6 +1,5 @@
 use crate::cmd::TMiniPlusCmd;
 
-
 /// # Example
 ///
 /// ```
@@ -42,11 +41,11 @@ impl LidarCommands for TMiniPlus {
     fn start_scan_cmd() -> &'static [u8; 2] {
         TMiniPlusCmd::START_SCAN.as_cmd()
     }
-    
+
     fn stop_scan_cmd() -> &'static [u8; 2] {
         TMiniPlusCmd::STOP_SCAN.as_cmd()
     }
-    
+
     fn get_info_cmd() -> &'static [u8; 2] {
         TMiniPlusCmd::GET_INFO.as_cmd()
     }
@@ -80,7 +79,7 @@ pub struct TMiniHeader {
 }
 
 impl TMiniHeader {
-    /// Create a new header from raw bytes.
+    /// Create a header from raw bytes.
     ///
     /// # Arguments
     ///
@@ -108,7 +107,7 @@ impl TMiniHeader {
     ///
     /// Verifies that the start marker is correct (0x55AA).
     pub fn is_valid(&self) -> bool {
-        self.header == 0xAA55 // Little endian
+        self.header == 0x55AA // Little endian: bytes are AA 55, value is 0x55AA
     }
 
     /// Get the scan frequency from the control byte.
@@ -139,18 +138,14 @@ pub struct SampleNode {
 }
 
 impl SampleNode {
-    /// Extract the distance value from the sample.
-    ///
     /// # Returns
     ///
     /// Distance in millimeters.
     pub fn distance(&self) -> u16 {
-        let high = (self.distance_high_and_flag & 0x3F) as u16;
-        (high << 8) | (self.distance_low as u16)
+        // where s1=intensity, s2=distance_low, s3=distance_high_and_flag
+        ((self.distance_high_and_flag as u16) << 6) | ((self.distance_low as u16) >> 2)
     }
 
-    /// Check if this sample is invalid.
-    ///
     /// # Returns
     ///
     /// True if the sample should be discarded.
