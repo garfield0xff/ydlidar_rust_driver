@@ -83,25 +83,6 @@ loop {
     // Process points...
 }
 ```
-
-## Adding New Models
-
-```rust
-use yd_driver::LidarCommands;
-
-pub struct YDLidarX4;
-
-impl LidarCommands for YDLidarX4 {
-    type Header = X4Header;
-    
-    fn start_scan_cmd() -> &'static [u8; 2] {
-        &[0xA5, 0x60]
-    }
-    
-    fn stop_scan_cmd() -> &'static [u8; 2] {
-        &[0xA5, 0x65]
-    }
-    
     fn get_info_cmd() -> &'static [u8; 2] {
         &[0xA5, 0x90]
     }
